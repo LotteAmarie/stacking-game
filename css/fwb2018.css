@@ -479,8 +479,6 @@ input[type='radio']:checked:after {
 	height: 100%;
 }
 /* Stacking */
-
-
 .stacking {
 	/* background-color: #B3B3B3; */
 	background-repeat: no-repeat;
@@ -553,30 +551,31 @@ input[type='radio']:checked:after {
 }
 .shopping-bag {
 	margin: 295px auto 0 auto;
-	width: 540px;
-	height: 540px;
+	width: 70%;
+	height: 70%;
 	text-align: center;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-template-rows: 1fr 1fr 1fr 1fr;
 	grid-gap: 10px;
 }
-#bag0 {
-	background: url(../img/shopping-bag-images/logo1.jpg);
+.logo {
+	background: pink;
 }
 .stackingplayarea {
 	width: 100%;
-	max-height: 920px;
-	max-width: 1080px;
-	margin-top: 0;
-	margin-right: auto;
-	margin-left: auto;
-	text-align: center;
 	height: 100%;
+	max-width: 1080px;
+	max-height: 920px;
+	margin: auto auto auto auto;
+	text-align: center;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+	grid-template-rows: 0.5fr 1fr 1fr 1fr 1fr 1fr 1fr;
+	grid-gap: 10px;
 }
-.stackinggamecode {
-	width: 1080px;
-	height: 920px;
+.play-area-square {
+	background: pink;
 }
 
 /* Mobile */
