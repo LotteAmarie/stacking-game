@@ -74,7 +74,7 @@ p {
 .home {
 	background-color: #B3B3B3;
 	background-repeat: no-repeat;
-	background-image: url(../images/home.jpg);
+	background-image: url(../img/home.jpg);
 	max-width: 1920px;
 	height: 1080px;
 }
@@ -128,7 +128,7 @@ p {
 .memory {
 	background-color: #B3B3B3;
 	background-repeat: no-repeat;
-	background-image: url(../images/blue-circle_bg.png);
+	background-image: url(../img/blue-circle_bg.png);
 	max-width: 1920px;
 	text-align: center;
 	height: 1080px;
@@ -203,7 +203,7 @@ p {
 	backface-visibility: hidden;
 }
 .front {
-	background: #FAB942 url('../images/match/Match_.jpg') no-repeat center center / contain;
+	background: #FAB942 url('../img/match/Match_.jpg') no-repeat center center / contain;
 }
 .back {
 	-webkit-transform: rotateY(180deg);
@@ -218,13 +218,13 @@ p {
 	transform: rotateY(180deg);
 }
 .match .front {
-	background: #FAB942 url('../images/match/Match_0.jpg') no-repeat center center / contain;
+	background: #FAB942 url('../img/match/Match_0.jpg') no-repeat center center / contain;
 }
 /* Flying Game  */
 .flying {
 	background-color: #B3B3B3;
 	background-repeat: no-repeat;
-	background-image: url(../images/home_flying.jpg);
+	background-image: url(../img/home_flying.jpg);
 	height: 1080px;
 	max-width: 1920px;
 	text-align: center;
@@ -250,7 +250,7 @@ p {
 .trivia {
 	background-color: #B3B3B3;
 	background-repeat: no-repeat;
-	background-image: url(../images/trivia_home.jpg);
+	background-image: url(../img/trivia_home.jpg);
 	height: 1080px;
 	max-width: 1920px;
 	text-align: center;
@@ -271,7 +271,7 @@ p {
 .triviagame {
 	background-color: #B3B3B3;
 	background-repeat: no-repeat;
-	background-image: url(../images/airport-trivia_bg.jpg);
+	background-image: url(../img/airport-trivia_bg.jpg);
 	height: 1080px;
 	max-width: 1920px;
 	text-align: center;
@@ -368,7 +368,7 @@ input[type='radio']:checked:after {
 .about {
 	background-color: #B3B3B3;
 	background-repeat: no-repeat;
-	background-image: url(../images/about_program.jpg);
+	background-image: url(../img/about_program.jpg);
 	height: 1080px;
 	max-width: 1920px;
 	text-align: center;
@@ -379,7 +379,7 @@ input[type='radio']:checked:after {
 .credits {
 	background-color: #B3B3B3;
 	background-repeat: no-repeat;
-	background-image: url(../images/credits.jpg);
+	background-image: url(../img/credits.jpg);
 	height: 1080px;
 	max-width: 1920px;
 	text-align: center;
@@ -472,7 +472,7 @@ input[type='radio']:checked:after {
 .puzzle {
 	background-color: #B3B3B3;
 	background-repeat: no-repeat;
-	background-image: url(../images/blue-circle_bg.png);
+	background-image: url(../img/blue-circle_bg.png);
 	max-width: 1920px;
 	text-align: center;
 	max-height: 1080px;
@@ -489,7 +489,7 @@ input[type='radio']:checked:after {
 	max-height: 1080px;
 	height: 100%;
 	width: 100%;
-	background: url(../images/stacking_background.jpg) no-repeat center center fixed;
+	background: url(../img/stacking_background.jpg) no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -526,7 +526,7 @@ input[type='radio']:checked:after {
 	margin-bottom: 0;
 	height: 88%;
 	/*	background-color: #012337; */
-	background: url(../images/game-area-and-shadow.png) no-repeat center center;
+	background: url(../img/game-area-and-shadow.png) no-repeat center center;
 	background-size: contain;
 }
 .stacking-right img {
@@ -544,19 +544,25 @@ input[type='radio']:checked:after {
 	/* border: 1px solid #efef12; */
 	text-align: center;
 	height: 88%;
-	background: url(../images/shopping-bag_large.png) no-repeat;
+	background: url(../img/shopping-bag_large.png) no-repeat;
 	background-size: contain;
 }
 .stacking-left img {
 	width: 100%;
 	height: 100%;
 }
-.shoppinglogoscript {
-	border: 1px solid #FF00D6;
+.shopping-bag {
 	margin: 295px auto 0 auto;
 	width: 540px;
 	height: 540px;
 	text-align: center;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr 1fr 1fr;
+	grid-gap: 10px;
+}
+#bag0 {
+	background: url(../img/shopping-bag-images/logo1.jpg);
 }
 .stackingplayarea {
 	width: 100%;
