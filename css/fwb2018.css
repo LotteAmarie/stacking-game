@@ -559,23 +559,48 @@ input[type='radio']:checked:after {
 	grid-template-rows: 1fr 1fr 1fr 1fr;
 	grid-gap: 10px;
 }
-.logo {
+#bag0 {
+	background: url(../img/shopping-bag-images/logo1.jpg);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+#bag1 {
+	background: url(../img/shopping-bag-images/logo10.jpg);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+#bag2 {
+	background: url(../img/shopping-bag-images/logo11.jpg);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+#pos1 {
+	background: url(../img/stacking-images/stacking1.png);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+#pos8 {
+	background: url(../img/stacking-images/stacking11.png);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.play-area-square {
 	background: pink;
 }
 .stackingplayarea {
-	width: 100%;
-	height: 100%;
-	max-width: 1080px;
-	max-height: 920px;
-	margin: auto auto auto auto;
+	width: 90%;
+	height: 90%;
+	margin: 1.75rem 4.11rem auto auto;
 	text-align: center;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 	grid-template-rows: 0.5fr 1fr 1fr 1fr 1fr 1fr 1fr;
 	grid-gap: 10px;
-}
-.play-area-square {
-	background: pink;
 }
 
 /* Mobile */
