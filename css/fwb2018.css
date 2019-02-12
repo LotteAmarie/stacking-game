@@ -551,13 +551,16 @@ input[type='radio']:checked:after {
 }
 .shopping-bag {
 	margin: 295px auto 0 auto;
-	width: 70%;
-	height: 70%;
+	width: 62%;
+	height: 62%;
 	text-align: center;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-template-rows: 1fr 1fr 1fr 1fr;
 	grid-gap: 10px;
+}
+.logo {
+	background: pink;
 }
 #bag0 {
 	background: url(../img/shopping-bag-images/logo1.jpg);
