@@ -1,0 +1,205 @@
+﻿@charset "UTF-8";
+/* Body */
+body {
+	font-family: 'Roboto Condensed', sans-serif;
+	background-color: #f2f2f2;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	font-style: normal;
+	font-weight: 200;
+}
+/* Container */
+.container {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	height: 100%;
+	background-color: #FFFFFF;
+	max-height: 1080px;
+}
+/* Navigation */
+
+#back {
+	padding-top: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	position: absolute;
+	bottom: 10px;
+	left: 0px;
+}
+#logo {
+	margin-left: 100px;
+	width: 600px;
+	height: 58%;
+}
+/* Memory Page  */
+#memoryblock {
+	top: 60%;
+	padding-top: 10px;
+	padding-right: 5%;
+	padding-left: 5%;
+	padding-bottom: 10px;
+	position: absolute;
+	background-color: #11517a;
+	width: 90%;
+}
+/* Memory Game  */
+*, *::before, *::after {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.grid {
+	max-width: 1300px;
+	margin: 0 auto;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	-webkit-box-pack: space-evenly;
+	-ms-flex-pack: space-evenly;
+	justify-content: space-evenly;
+}
+/* Stacking */
+.stacking {
+	/* background-color: #B3B3B3; */
+	background-repeat: no-repeat;
+	max-width: 1920px;
+	text-align: center;
+	max-height: 1080px;
+	height: 100%;
+	width: 100%;
+	background: url(../img/stacking_background.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+.stackingtitle {
+	width: 32%;
+	padding-left: 3%;
+	text-align: left;
+	padding-top: 0px;
+	height: 12%;
+	float: left;
+}
+.stackingtitle img {
+	width: 100%;
+}
+.stackingscore {
+	float: right;
+	width: 15%;
+	background-color: #3000F5;
+	color: #ffffff;
+	font-size: 150%;
+	padding: 20px 5px;
+	height: 8%;
+}
+.stacking-right {
+	width: 59%;
+	float: right;
+	padding-right: 2%;
+	padding-left: 2%;
+	/*		border: 2px solid #212212;  */
+	margin-top: 0;
+	margin-right: 3%;
+	margin-bottom: 0;
+	height: 88%;
+	/*	background-color: #012337; */
+	background: url(../img/game-area-and-shadow.png) no-repeat center center;
+	background-size: contain;
+}
+.stacking-right img {
+	width: 100%;
+	height: 100%;
+}
+.stacking-left {
+	float: left;
+	width: 32%;
+	margin-top: 0px;
+	margin-right: 3%;
+	margin-left: 3%;
+	margin-bottom: 0;
+	padding-bottom: 0;
+	/* border: 1px solid #efef12; */
+	text-align: center;
+	height: 88%;
+	background: url(../img/shopping-bag_large.png) no-repeat;
+	background-size: contain;
+}
+.stacking-left img {
+	width: 100%;
+	height: 100%;
+}
+.shopping-bag {
+	margin: 295px auto 0 auto;
+	width: 62%;
+	height: 62%;
+	text-align: center;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr 1fr 1fr;
+	grid-gap: 10px;
+}
+.logo {
+	background: pink;
+}
+#bag0 {
+	background: url(../img/shopping-bag-images/logo1.jpg);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+#bag1 {
+	background: url(../img/shopping-bag-images/logo10.jpg);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+#bag2 {
+	background: url(../img/shopping-bag-images/logo11.jpg);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+#pos1 {
+	background: url(../img/stacking-images/stacking1.png);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+#pos8 {
+	background: url(../img/stacking-images/stacking11.png);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.play-area-square {
+	background: pink;
+}
+.stackingplayarea {
+	width: 90%;
+	height: 90%;
+	margin: 1.75rem 4.11rem auto auto;
+	text-align: center;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+	grid-template-rows: 0.5fr 1fr 1fr 1fr 1fr 1fr 1fr;
+	grid-gap: 10px;
+}
+
+/* Mobile */
+@media (max-width: 320px) {
+}
+
+/* Small Tablets */
+@media (min-width: 321px)and (max-width: 767px) {
+}
+
+/* Small Desktops */
+@media (min-width: 768px) and (max-width: 1096px) {
+}
