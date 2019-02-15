@@ -160,6 +160,9 @@ function createCurrent() {
 
     // Shows in first line
     getCell(current.position.row, current.position.col).style.backgroundImage = `url(${current.img})`;
+    getCell(current.position.row, current.position.col).style.backgroundSize = `contain`; 
+    getCell(current.position.row, current.position.col).style.backgroundRepeat = `no-repeat`;
+    getCell(current.position.row, current.position.col).style.backgroundPosition = `center`;
 }
 createCurrent();
 
@@ -181,7 +184,9 @@ function fall() {
 
     // Updates HTML to insert image in next row
     getCell(row+1, col).style.backgroundImage = `url(${current.img})`;
-
+    getCell(row+1, col).style.backgroundSize = `contain`; 
+    getCell(row+1, col).style.backgroundRepeat = `no-repeat`;
+    getCell(row+1, col).style.backgroundPosition = `center`;
     // Moves current to next row
     board[row + 1][col] = current;
 
@@ -305,8 +310,9 @@ function startGame() {
                         emptyCell(currentCell);
                         
                         // Updates current cell and current row
-                        board[currentRow][col] = null;
                         previousCell = currentCell;
+                        board[currentRow+1][col] = board[currentRow][col];
+                        board[currentRow][col] = null;
                         currentRow--;
                     }
                 });
@@ -348,6 +354,9 @@ function addEvents () {
                 board[row][col] = null;
                 board[row][col+1] = current;
                 getCell(row, col+1).style.backgroundImage = `url(${current.img})`;
+                getCell(row, col+1).style.backgroundSize = `contain`; 
+                getCell(row, col+1).style.backgroundRepeat = `no-repeat`;
+                getCell(row, col+1).style.backgroundPosition = `center`;
                 current.position.col++;
                 break;
                 
@@ -360,6 +369,9 @@ function addEvents () {
                 board[row][col] = null;
                 board[row][col-1] = current;
                 getCell(row, col-1).style.backgroundImage = `url(${current.img})`;
+                getCell(row, col-1).style.backgroundSize = `contain`; 
+                getCell(row, col-1).style.backgroundRepeat = `no-repeat`;
+                getCell(row, col-1).style.backgroundPosition = `center`;
                 current.position.col--;
                 break;
         }

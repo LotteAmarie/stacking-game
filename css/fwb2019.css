@@ -127,7 +127,11 @@ body {
 	background-repeat: no-repeat;
 	background-position: center;
 }
-
+.play-area-square {
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
 .stackingplayarea .play-area-square {
 	background-size: contain;
 	background-repeat: no-repeat;
