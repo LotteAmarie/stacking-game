@@ -141,7 +141,7 @@ const config = {
 const currentArrayName = ['firstArray', 'secondArray', 'thirdArray'][Math.floor(Math.random() * 3)];
 const currentArray = window[currentArrayName];
 
-console.log('currentArray:', currentArrayName)
+console.log('currentArray:', currentArrayName);
 
 //Creates current element from the ramdom array
 function createCurrent() {
