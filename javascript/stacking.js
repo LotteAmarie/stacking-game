@@ -214,6 +214,7 @@ function match(position) {
             row: row,
             col: col + 1
         });
+        score += 5;
     }
     // Match on left
     if(left && current.name == left.name) {
@@ -221,6 +222,8 @@ function match(position) {
             row: row,
             col: col-1
         });
+
+        score += 5;
     }
     // Match on bottom
     if(down && current.name == down.name) {
@@ -228,7 +231,11 @@ function match(position) {
             row: row + 1,
             col: col
         });
+
+        score += 5;
     }
+
+    drawScore();
 
     if(matches.length === 0) {
         return false;
@@ -247,7 +254,7 @@ function createBoard(cols, rows) {
     return arr;
 }
 
-let score = 0;
+var score = 0;
 const board = createBoard(cols, rows);
 const shoppingCart = [];
 
@@ -388,6 +395,11 @@ function canMove(direction) {
     if(direction === 'right') {
         return col < config.cols - 1 && board[row][col + 1] === null;
     }
+}
+
+function drawScore() {
+    let scoreElement = document.getElementById("stackingscore");
+    scoreElement.innerHTML = `Score: ${score}`;
 }
 
 startGame();
