@@ -198,9 +198,9 @@ function getCell(row, col) {
     return document.querySelector(`#pos${row * 7 + col}`);
 }
 
-function match() {
+function match(position) {
     //Returns board positions that match -- How?
-    const { row, col } = current.position;
+    const { row, col } = position;
     //Array for the matches icons to show on the shopping cart
     const matches = [];
 
@@ -264,7 +264,7 @@ function startGame() {
             fall();
         } else {
             
-            const matchedSlots = match();
+            const matchedSlots = match(current.position);
             
             if (matchedSlots) {
     
