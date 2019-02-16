@@ -198,6 +198,17 @@ function getCell(row, col) {
     return document.querySelector(`#pos${row * 7 + col}`);
 }
 
+function getShoppingBag() {
+    return document.querySelectorAll("div.logo.empty")
+}
+
+function addToShoppingBag(img) {
+    let bag = getShoppingBag();
+
+    bag[bag.length-1].style.backgroundImage = `url(${current.img})`;
+    bag[bag.length-1].classList.remove('empty');
+}
+
 function match(position) {
     //Returns board positions that match -- How?
     const { row, col } = position;
@@ -214,7 +225,7 @@ function match(position) {
             row: row,
             col: col + 1
         });
-        
+
         score += 5;
     }
     // Match on left
@@ -248,7 +259,7 @@ function match(position) {
 function createBoard(cols, rows) {
     var arr = new Array(cols).fill(null);
 
-    for (var i = 0; i < arr.length; i++) {
+    for (let i = 0; i < arr.length; i++) {
         arr[i] = new Array(rows).fill(null);
     }
 
@@ -277,10 +288,8 @@ function startGame() {
             if (matchedSlots) {
     
                 if(!matchedElements[current.name]) {
-                    const logo = document.querySelector('.logo.empty');
-                    logo.style.backgroundImage = `url(${current.img})`;
-                    logo.classList.remove('empty');
-                    
+                    addToShoppingBag(current.img);
+
                     // Creates an attribute in matched elements with the current name
                     matchedElements[current.name] = true;
                 }
