@@ -214,6 +214,7 @@ function match(position) {
             row: row,
             col: col + 1
         });
+        
         score += 5;
     }
     // Match on left
