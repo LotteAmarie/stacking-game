@@ -1,4 +1,3 @@
-
 //Arrays with brand icons to ramdomly select them at a given level (1,2,or 3)
 var firstArray = [
     {
