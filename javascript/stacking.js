@@ -409,10 +409,19 @@ function startGame() {
     }, config.gameSpeed);
 }
 
+/**
+ * Function to clear the corresponding HTML Element of a game piece through CSS
+ * Styles.
+ * 
+ * @param {Element} cell 
+ */
 function emptyCell(cell) {
     cell.style.backgroundImage = '';
 }
 
+/**
+ * Function to add the event listeners used for interacting with the game.
+ */
 function addEvents () {
     document.body.addEventListener('keydown', function(event) {
         // Avoids moving when reached the bottom
@@ -455,6 +464,12 @@ function addEvents () {
     });
 }
 
+/**
+ * Function to check if the current game piece is able to move left or right
+ * or if it will collide with an existing piece.
+ * 
+ * @param {String} direction 
+ */
 function canMove(direction) {
     const { row, col } = current.position;
 
@@ -467,6 +482,9 @@ function canMove(direction) {
     }
 }
 
+/**
+ * Function to draw the score onto the HTML Element "stackingscore."
+ */
 function drawScore() {
     let scoreElement = document.getElementById("stackingscore");
     scoreElement.innerHTML = `Score: ${score}`;
