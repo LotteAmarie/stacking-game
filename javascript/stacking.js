@@ -208,18 +208,17 @@ function addToShoppingBag(img) {
     bag[bag.length-1].classList.remove('empty');
 }
 
-function match(position) {
-    //Returns board positions that match -- How?
-    const { row, col } = position;
+function match(row, col) {
     //Array for the matches icons to show on the shopping cart
     const matches = [];
 
+    const name = board[row][col].name;
     const right = board[row][col+1];
     const left = board[row][col-1];
     const down = row < config.rows - 1 && board[row + 1][col];
 
     // Match on right
-    if(right && current.name == right.name) {
+    if(right && name == right.name) {
         matches.push({
             row: row,
             col: col + 1
@@ -228,7 +227,7 @@ function match(position) {
         score += 5;
     }
     // Match on left
-    if(left && current.name == left.name) {
+    if(left && name == left.name) {
         matches.push({
             row: row,
             col: col-1
@@ -237,7 +236,7 @@ function match(position) {
         score += 5;
     }
     // Match on bottom
-    if(down && current.name == down.name) {
+    if(down && name == down.name) {
         matches.push({
             row: row + 1,
             col: col
@@ -253,6 +252,42 @@ function match(position) {
     } else {
         return matches;
     }
+}
+
+function clearMatches(matches) {
+    matches.forEach(m => {
+        console.log("clearing", m);
+
+        let cell = getCell(m.row, m.col);
+
+        emptyCell(cell);
+        board[m.row][m.col] = null;
+
+        // Moves images from to to bottom
+        let currentRow = m.row - 1;
+        let previousCell = cell;
+                    
+        while(board[currentRow][m.col] !== null) {
+            const currentCell = getCell(currentRow, m.col)
+                        
+            // Updates images
+            previousCell.style.backgroundImage = currentCell.style.backgroundImage;
+            emptyCell(currentCell);
+                      
+            // Updates current cell and current row
+            previousCell = currentCell;
+            board[currentRow+1][m.col] = board[currentRow][m.col];
+            board[currentRow][m.col] = null;
+
+            // Check for matches
+            let matches = match(currentRow + 1, m.col);
+            if (matches) {
+                clearMatches(matches);
+            }
+
+            currentRow--;
+        }
+    });
 }
 
 function createBoard(cols, rows) {
@@ -282,7 +317,7 @@ function startGame() {
             fall();
         } else {
             
-            const matchedSlots = match(current.position);
+            const matchedSlots = match(current.position.row, current.position.col);
             
             if (matchedSlots) {
     
@@ -300,38 +335,39 @@ function startGame() {
 
                 console.log('matches:', matchedSlots)
                 
-                // Empties matched cells
-                matchedSlots.forEach(function(slot) {
-                    console.log('clearing', slot)
+                // // Empties matched cells
+                // matchedSlots.forEach(function(slot) {
+                //     console.log('clearing', slot);
 
-                    // Gets cell
-                    const { row, col } = slot;
-                    const cell = getCell(row, col);
+                //     // Gets cell
+                //     const { row, col } = slot;
+                //     const cell = getCell(row, col);
     
-                    // Removes image from HTML
-                    emptyCell(cell);
+                //     // Removes image from HTML
+                //     emptyCell(cell);
     
-                    // Clears board array 
-                    board[row][col] = null;
+                //     // Clears board array 
+                //     board[row][col] = null;
     
-                    // Moves images from to to bottom
-                    let currentRow = row - 1;
-                    let previousCell = cell;
+                //     // Moves images from to to bottom
+                //     let currentRow = row - 1;
+                //     let previousCell = cell;
                     
-                    while(board[currentRow][col] !== null) {
-                        const currentCell = getCell(currentRow, col)
+                //     while(board[currentRow][col] !== null) {
+                //         const currentCell = getCell(currentRow, col)
                         
-                        // Updates images
-                        previousCell.style.backgroundImage = currentCell.style.backgroundImage;
-                        emptyCell(currentCell);
+                //         // Updates images
+                //         previousCell.style.backgroundImage = currentCell.style.backgroundImage;
+                //         emptyCell(currentCell);
                         
-                        // Updates current cell and current row
-                        previousCell = currentCell;
-                        board[currentRow+1][col] = board[currentRow][col];
-                        board[currentRow][col] = null;
-                        currentRow--;
-                    }
-                });
+                //         // Updates current cell and current row
+                //         previousCell = currentCell;
+                //         board[currentRow+1][col] = board[currentRow][col];
+                //         board[currentRow][col] = null;
+                //         currentRow--;
+                //     }
+                // });
+                clearMatches(matchedSlots);
             }
     
             // Creates new "current"
