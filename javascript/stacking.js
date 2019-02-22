@@ -360,38 +360,6 @@ function startGame() {
 
                 console.log('matches:', matchedSlots)
                 
-                // // Empties matched cells
-                // matchedSlots.forEach(function(slot) {
-                //     console.log('clearing', slot);
-
-                //     // Gets cell
-                //     const { row, col } = slot;
-                //     const cell = getCell(row, col);
-    
-                //     // Removes image from HTML
-                //     emptyCell(cell);
-    
-                //     // Clears board array 
-                //     board[row][col] = null;
-    
-                //     // Moves images from to to bottom
-                //     let currentRow = row - 1;
-                //     let previousCell = cell;
-                    
-                //     while(board[currentRow][col] !== null) {
-                //         const currentCell = getCell(currentRow, col)
-                        
-                //         // Updates images
-                //         previousCell.style.backgroundImage = currentCell.style.backgroundImage;
-                //         emptyCell(currentCell);
-                        
-                //         // Updates current cell and current row
-                //         previousCell = currentCell;
-                //         board[currentRow+1][col] = board[currentRow][col];
-                //         board[currentRow][col] = null;
-                //         currentRow--;
-                //     }
-                // });
                 clearMatches(matchedSlots);
             }
     
