@@ -40,7 +40,7 @@ var firstArray = [
         'name' : 'Cibo',
         'img' : 'img/stacking-images/stacking10.png'
     },
-]
+];
 
 var secondArray = [
     {
@@ -83,7 +83,7 @@ var secondArray = [
         'name' : 'Johnston & Murphy',
         'img' : 'img/stacking-images/stacking20.png'
     },
-]
+];
 
 var thirdArray = [
     {
@@ -345,7 +345,8 @@ function loadJSON(callback) {
     xobj.open('GET', 'javascript/stacking-config.json', true); 
     xobj.onreadystatechange = function () {
         if (xobj.readyState == 4 && xobj.status == "200") {
-            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+            // Required use of an anonymous callback as .open will NOT return
+            // a value but simply returns undefined in asynchronous mode
             callback(xobj.responseText);
         }
     };
@@ -383,9 +384,9 @@ const stopGame = () => clearInterval(gameInterval); // TODO: Just a normal funct
 
 function startGame() {
     gameInterval = setInterval(() => {
-        if (canFall()) {
+        if (canFall()) { // Falling State
             fall();
-        } else {
+        } else { // When landing
             const matchedSlots = match(current.position.row, current.position.col);
             
             if (matchedSlots) {
@@ -397,6 +398,7 @@ function startGame() {
                     matchedElements[current.name] = true;
                 }
     
+                // TODO: This really should be moved into the clearMatches() function.
                 // Empties current cell
                 const { col, row } = current.position;
                 emptyCell(getCell(row, col));
@@ -417,7 +419,9 @@ function startGame() {
             stopGame();
         }*/
     
-        //addNewIcon //how do I add a new icon and make a preview (before starting to fall) in x,1 at a ramdom y postition
+        // addNewIcon 
+        // how do I add a new icon and make a preview (before starting to fall) 
+        // in x,1 at a ramdom y postition
     }, config.gameSpeed);
 }
 
@@ -427,7 +431,7 @@ function startGame() {
  * 
  * @param {Element} cell 
  */
-function emptyCell(cell) {
+function emptyCell(cell) { // TODO: Also clear location in board array?
     cell.style.backgroundImage = '';
 }
 
