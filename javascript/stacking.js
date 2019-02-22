@@ -193,14 +193,31 @@ function fall() {
     current.position.row++;
 }
 
-function getCell(row, col) {
+/**
+ * Function to return the HTML div element corresponding to the given row and
+ * column.
+ * 
+ * @param {Number} row row position on the game board
+ * @param {Number} col column position on the game board
+ * 
+ * @returns {Element} HTML div returned
+ */
+function getCell(row, col) { // TODO: not found case?
     return document.querySelector(`#pos${row * 7 + col}`);
 }
 
+/**
+ * Function to return all the empty HTML div elements within the shopping bag.
+ */
 function getShoppingBag() {
     return document.querySelectorAll("div.logo.empty")
 }
 
+/**
+ * Function which places the given image into the shopping bag.
+ * 
+ * @param {String} img path of the image to be displayed in the shopping bag
+ */
 function addToShoppingBag(img) {
     let bag = getShoppingBag();
 
@@ -208,6 +225,16 @@ function addToShoppingBag(img) {
     bag[bag.length-1].classList.remove('empty');
 }
 
+/**
+ * Function to check for potential matches at the given row and column on the 
+ * game board.
+ * 
+ * @param {Number} row 
+ * @param {Number} col column position of the game piece
+ * 
+ * @returns {boolean} false if no matches were found
+ * @returns {Object[]} an array containing any valid matches
+ */
 function match(row, col) {
     //Array for the matches icons to show on the shopping cart
     const matches = [];
@@ -254,6 +281,11 @@ function match(row, col) {
     }
 }
 
+/**
+ * Function to clear any matching game pieces upon a game piece landing.
+ *  
+ * @param {Object[]} matches matching game pieces to be cleared
+ */
 function clearMatches(matches) {
     matches.forEach(m => {
         console.log("clearing", m);
@@ -335,13 +367,10 @@ let gameInterval;
 
 const stopGame = () => clearInterval(gameInterval);
 function startGame() {
-
     gameInterval = setInterval(() => {
-    
         if (canFall()) {
             fall();
         } else {
-            
             const matchedSlots = match(current.position.row, current.position.col);
             
             if (matchedSlots) {
