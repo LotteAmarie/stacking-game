@@ -128,7 +128,7 @@ var thirdArray = [
     },
 ];
 
-var cols = 7;
+var cols = 7; // TODO: This is set twice. Should be a constant unless the ability to create divs dynamically is added.
 var rows = 7;
 const config = {
     cols: 7,
@@ -142,7 +142,10 @@ const currentArray = window[currentArrayName];
 
 console.log('currentArray:', currentArrayName);
 
-//Creates current element from the ramdom array
+/**
+ * Function to create the current controllable game piece. The logo is pulled 
+ * at random from a pool of twelve.
+ */
 function createCurrent() {
     const randomElementIndex = Math.floor(Math.random() * currentArray.length);
     const current = currentArray[randomElementIndex];
@@ -163,14 +166,22 @@ function createCurrent() {
     getCell(current.position.row, current.position.col).style.backgroundRepeat = `no-repeat`;
     getCell(current.position.row, current.position.col).style.backgroundPosition = `center`;
 }
-createCurrent();
+createCurrent(); // TODO: Move this to startGame()
 
-//Checks for the last null position to assign the current value
+/**
+ * Function to check if the space below the current game space is empty and the
+ * piece can safely fall without colliding.
+ * 
+ * @returns {boolean} returns true if the row under the current piece is null
+ */
 function canFall() {
     const { row, col } = current.position;
-    return row !== 6 && board[row + 1][col] === null;
+    return row !== 6 && board[row + 1][col] === null; // TODO: row !== 6?
 }
 
+/**
+ * Function to move the current game piece down one row.
+ */
 function fall() {
     // Gets current position
     const { row, col } = current.position;
@@ -365,7 +376,11 @@ const matchedElements = {};
 let time = 0;
 let gameInterval;
 
-const stopGame = () => clearInterval(gameInterval);
+/**
+ * Function which stops the game by clearing the game interval.
+ */
+const stopGame = () => clearInterval(gameInterval); // TODO: Just a normal function would be more appropriate in this case.
+
 function startGame() {
     gameInterval = setInterval(() => {
         if (canFall()) {
@@ -396,7 +411,7 @@ function startGame() {
             createCurrent();
         }
     
-        time = time + 1;
+        time = time + 1; // TODO: display this?
     
         /*if (time === 60) {
             stopGame();
@@ -487,5 +502,5 @@ function drawScore() {
     scoreElement.innerHTML = `Score: ${score}`;
 }
 
-startGame();
+startGame(); // TODO: Add this to the HTML's body onload
 addEvents();
