@@ -398,6 +398,7 @@ function createCurrent() {
 
     if (board[0][randomColumn] !== null) { 
         // TODO: We can have the game have a bias against spawning blocks rows that would cause a game over to lower difficulty
+        console.log(`Game Over: ${randomColumn} was filled`);
         stopGame();
     }
 
@@ -415,7 +416,12 @@ createCurrent(); // TODO: Move this to startGame()
 /**
  * Function which stops the game by clearing the game interval.
  */
-const stopGame = () => clearInterval(gameInterval); // TODO: Just a normal function would be more appropriate in this case.
+function stopGame() {
+    clearInterval(gameInterval);
+
+    let gameOverUrl = `game_end_stacking.php?score=${score}`;
+    window.location.assign(gameOverUrl);
+}
 
 function startGame() {
     gameInterval = setInterval(() => {
