@@ -456,8 +456,6 @@ function startGame() {
         
         time = time + config.gameSpeed; // TODO: display this?
 
-        console.log(time);
-    
         if (time === 60000) { // in milliseconds
             stopGame();
         }
