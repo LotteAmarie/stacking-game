@@ -453,12 +453,14 @@ function startGame() {
             // Creates new "current"
             createCurrent();
         }
+        
+        time = time + config.gameSpeed; // TODO: display this?
+
+        console.log(time);
     
-        time = time + 1; // TODO: display this?
-    
-        /*if (time === 60) {
+        if (time === 60000) { // in milliseconds
             stopGame();
-        }*/
+        }
     
         // addNewIcon 
         // how do I add a new icon and make a preview (before starting to fall) 
