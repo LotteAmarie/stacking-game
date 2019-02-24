@@ -157,6 +157,11 @@ function createCurrent() {
         row: 0
     };
 
+    if (board[0][randomColumn] !== null) { 
+        // TODO: We can have the game have a bias against spawning blocks rows that would cause a game over to lower difficulty
+        stopGame();
+    }
+
     // Creates a global variable with the new object
     window.current = current;
 
