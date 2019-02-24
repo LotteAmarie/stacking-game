@@ -325,6 +325,9 @@ function clearMatches(matches) {
             // Check for matches
             let matches = match(currentRow + 1, m.col);
             if (matches) {
+                emptyCell(getCell(currentRow + 1, m.col));
+                board[currentRow + 1][m.col] = null;
+
                 clearMatches(matches);
             }
 
@@ -351,6 +354,29 @@ function loadJSON(callback) {
         }
     };
     xobj.send(null);  
+}
+
+/**
+ * Function which fetches the logos from json.
+ */
+function getLogos() {
+    return loadJSON(response => {
+        return JSON.parse(response);
+    });
+}
+
+function take(arr, n) {
+    let result = new Array(n);
+    let len = arr.length;
+    let taken = new Array(len);
+    if (n > len)
+        throw new RangeError("getRandom: more elements taken than available");
+    while (n--) {
+        var x = Math.floor(Math.random() * len);
+        result[n] = arr[x in taken ? taken[x] : x];
+        taken[x] = --len;
+    }
+    return result;
 }
 
 /**
