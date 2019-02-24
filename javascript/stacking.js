@@ -143,37 +143,6 @@ const currentArray = window[currentArrayName];
 console.log('currentArray:', currentArrayName);
 
 /**
- * Function to create the current controllable game piece. The logo is pulled 
- * at random from a pool of twelve.
- */
-function createCurrent() {
-    const randomElementIndex = Math.floor(Math.random() * currentArray.length);
-    const current = currentArray[randomElementIndex];
-    //Positionates the element in a ramdom column
-    const randomColumn = Math.floor(Math.random() * cols);
-    //preview row position
-    current.position = {
-        col: randomColumn,
-        row: 0
-    };
-
-    if (board[0][randomColumn] !== null) { 
-        // TODO: We can have the game have a bias against spawning blocks rows that would cause a game over to lower difficulty
-        stopGame();
-    }
-
-    // Creates a global variable with the new object
-    window.current = current;
-
-    // Shows in first line
-    getCell(current.position.row, current.position.col).style.backgroundImage = `url(${current.img})`;
-    getCell(current.position.row, current.position.col).style.backgroundSize = `contain`; 
-    getCell(current.position.row, current.position.col).style.backgroundRepeat = `no-repeat`;
-    getCell(current.position.row, current.position.col).style.backgroundPosition = `center`;
-}
-createCurrent(); // TODO: Move this to startGame()
-
-/**
  * Function to check if the space below the current game space is empty and the
  * piece can safely fall without colliding.
  * 
@@ -255,7 +224,11 @@ function match(row, col) {
     //Array for the matches icons to show on the shopping cart
     const matches = [];
 
-    const name = board[row][col].name;
+    let name; 
+    if (board[row][col] !== null) {
+        name = board[row][col].name;
+    }
+
     const right = board[row][col+1];
     const left = board[row][col-1];
     const down = row < config.rows - 1 && board[row + 1][col];
@@ -407,6 +380,37 @@ const shoppingCart = [];
 const matchedElements = {};
 let time = 0;
 let gameInterval;
+
+/**
+ * Function to create the current controllable game piece. The logo is pulled 
+ * at random from a pool of twelve.
+ */
+function createCurrent() {
+    const randomElementIndex = Math.floor(Math.random() * currentArray.length);
+    const current = currentArray[randomElementIndex];
+    //Positionates the element in a ramdom column
+    const randomColumn = Math.floor(Math.random() * cols);
+    //preview row position
+    current.position = {
+        col: randomColumn,
+        row: 0
+    };
+
+    if (board[0][randomColumn] !== null) { 
+        // TODO: We can have the game have a bias against spawning blocks rows that would cause a game over to lower difficulty
+        stopGame();
+    }
+
+    // Creates a global variable with the new object
+    window.current = current;
+
+    // Shows in first line
+    getCell(current.position.row, current.position.col).style.backgroundImage = `url(${current.img})`;
+    getCell(current.position.row, current.position.col).style.backgroundSize = `contain`; 
+    getCell(current.position.row, current.position.col).style.backgroundRepeat = `no-repeat`;
+    getCell(current.position.row, current.position.col).style.backgroundPosition = `center`;
+}
+createCurrent(); // TODO: Move this to startGame()
 
 /**
  * Function which stops the game by clearing the game interval.
