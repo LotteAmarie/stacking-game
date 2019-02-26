@@ -129,7 +129,8 @@ var secondArray = [
 const config = {
     cols: 7,
     rows: 7,
-    gameSpeed: 500
+    gameSpeed: 500, // in ms
+    gameDuration: 90000 // in ms
 };
 
 var score = 0;
@@ -177,10 +178,9 @@ function startGame() {
     
         time = time + config.gameSpeed; // TODO: display this?
     
-        // if (time === 60000) {
-        //     // sets localStorage
-        //     stopGame();
-        // }
+        if (time === config.gameDuration) {
+            stopGame();
+        }
 
     }, config.gameSpeed);
 }
