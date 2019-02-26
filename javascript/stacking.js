@@ -268,7 +268,11 @@ function match(row, col) {
     //Array for the matches icons to show on the shopping cart
     const matches = [];
 
-    const name = board[row][col].name;
+    let name; 
+    if (board[row][col] !== null) {
+        name = board[row][col].name;
+    }
+
     const right = board[row][col+1];
     const left = board[row][col-1];
     const down = row < config.rows - 1 && board[row + 1][col];
@@ -363,7 +367,7 @@ function clearMatches(matches) {
 function loadJSON(callback) {   
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
-    xobj.open('GET', 'javascript/stacking-config.json', true); 
+    xobj.open('GET', 'javascript/stacking_config.json', true); 
     xobj.onreadystatechange = function () {
         if (xobj.readyState == 4 && xobj.status == "200") {
             // Required use of an anonymous callback as .open will NOT return
