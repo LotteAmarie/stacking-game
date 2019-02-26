@@ -134,7 +134,6 @@ const config = {
 
 var score = 0;
 const board = createBoard(config.cols, config.rows);
-const shoppingCart = [];
 
 const matchedElements = {};
 let time = 0;
