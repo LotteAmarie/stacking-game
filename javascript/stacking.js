@@ -141,32 +141,6 @@ const currentArray = window[currentArrayName];
 console.log('currentArray:', currentArrayName);
 
 /**
- * Function to create the current controllable game piece. The logo is pulled 
- * at random from a pool of twelve.
- */
-function createCurrent() {
-    const randomElementIndex = Math.floor(Math.random() * currentArray.length);
-    const current = currentArray[randomElementIndex];
-    //Positionates the element in a ramdom column
-    const randomColumn = Math.floor(Math.random() * cols);
-    //preview row position
-    current.position = {
-        col: randomColumn,
-        row: 0
-    };
-
-    // Creates a global variable with the new object
-    window.current = current;
-
-    // Shows in first line
-    getCell(current.position.row, current.position.col).style.backgroundImage = `url(${current.img})`;
-    getCell(current.position.row, current.position.col).style.backgroundSize = `contain`; 
-    getCell(current.position.row, current.position.col).style.backgroundRepeat = `no-repeat`;
-    getCell(current.position.row, current.position.col).style.backgroundPosition = `center`;
-}
-createCurrent(); // TODO: Move this to startGame()
-
-/**
  * Function to check if the space below the current game space is empty and the
  * piece can safely fall without colliding.
  * 
@@ -402,9 +376,45 @@ let time = 0;
 let gameInterval;
 
 /**
+ * Function to create the current controllable game piece. The logo is pulled 
+ * at random from a pool of twelve.
+ */
+function createCurrent() {
+    const randomElementIndex = Math.floor(Math.random() * currentArray.length);
+    const current = currentArray[randomElementIndex];
+    //Positionates the element in a ramdom column
+    const randomColumn = Math.floor(Math.random() * cols);
+    //preview row position
+    current.position = {
+        col: randomColumn,
+        row: 0
+    };
+
+    if (board[0][randomColumn] !== null) { 
+        // TODO: We can have the game have a bias against spawning blocks rows that would cause a game over to lower difficulty
+        console.log(`Game Over: ${randomColumn} was filled`);
+        stopGame();
+    }
+
+    // Creates a global variable with the new object
+    window.current = current;
+
+    // Shows in first line
+    getCell(current.position.row, current.position.col).style.backgroundImage = `url(${current.img})`;
+    getCell(current.position.row, current.position.col).style.backgroundSize = `contain`; 
+    getCell(current.position.row, current.position.col).style.backgroundRepeat = `no-repeat`;
+    getCell(current.position.row, current.position.col).style.backgroundPosition = `center`;
+}
+createCurrent(); // TODO: Move this to startGame()
+
+/**
  * Function which stops the game by clearing the game interval.
  */
-const stopGame = () => clearInterval(gameInterval); // TODO: Just a normal function would be more appropriate in this case.
+function stopGame() {
+    clearInterval(gameInterval);
+    localStorage.setItem('score', score);
+    window.location.href= "../stacking-game/game_end_stacking.html";
+}
 
 function startGame() {
     gameInterval = setInterval(() => {
@@ -439,13 +449,12 @@ function startGame() {
             createCurrent();
         }
     
-        time = time + 1; // TODO: display this?
+        time = time + config.gameSpeed; // TODO: display this?
     
-        if (time === 60) {
-            // sets localStorage
-            localStorage.setItem('score', score);
-            window.location.href= "../stacking-game/game_end_stacking.html";
-        }
+        // if (time === 60000) {
+        //     // sets localStorage
+        //     stopGame();
+        // }
 
     }, config.gameSpeed);
 }
