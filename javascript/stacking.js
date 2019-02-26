@@ -2,7 +2,7 @@ const config = {
     cols: 7,
     rows: 7,
     gameSpeed: 500, // in ms
-    gameDuration: 90000 // in ms
+    gameDuration: 150000 // in ms
 };
 
 var score = 0;
@@ -134,6 +134,10 @@ function addToShoppingBag(img) {
 
     bag[bag.length-1].style.backgroundImage = `url(${img})`;
     bag[bag.length-1].classList.remove('empty');
+
+    if (bag.length === 1) {
+        stopGame();
+    }
 }
 
 /**
