@@ -1,131 +1,3 @@
-//Arrays with brand icons to ramdomly select them at a given level (1,2,or 3)
-var firstArray = [
-    {
-        'name' : 'Burrito Beach',
-        'img' : 'img/stacking-images/stacking1.png'
-    },
-    {
-        'name' : 'American Dog',
-        'img' : 'img/stacking-images/stacking2.png'
-    },
-    {
-        'name' : 'Anntie Anne',
-        'img' : 'img/stacking-images/stacking3.png'
-    },
-    {
-        'name' : 'Barbaras',
-        'img' : 'img/stacking-images/stacking4.png'
-    },
-    {
-        'name' : 'Berghoff Cafe',
-        'img' : 'img/stacking-images/stacking5.png'
-    },
-    {
-        'name' : 'Brighton',
-        'img' : 'img/stacking-images/stacking6.png'
-    },
-    {
-        'name' : 'Brooks Brothers',
-        'img' : 'img/stacking-images/stacking7.png'
-    },
-    {
-        'name' : 'Brookstone',
-        'img' : 'img/stacking-images/stacking8.png'
-    },
-    {
-        'name' : 'BSmooth',
-        'img' : 'img/stacking-images/stacking9.png'
-    },
-    {
-        'name' : 'Cibo',
-        'img' : 'img/stacking-images/stacking10.png'
-    },
-    {
-        'name' : 'CNN',
-        'img' : 'img/stacking-images/stacking11.png'
-    },
-    {
-        'name' : 'Coach',
-        'img' : 'img/stacking-images/stacking12.png'
-    },
-    {
-        'name' : 'Field',
-        'img' : 'img/stacking-images/stacking13.png'
-    },
-    {
-        'name' : 'Barbaras',
-        'img' : 'img/stacking-images/stacking14.png'
-    },
-    {
-        'name' : 'The Green Market',
-        'img' : 'img/stacking-images/stacking15.png'
-    },
-];
-
-var secondArray = [
-    
-    {
-        'name' : 'Hudson',
-        'img' : 'img/stacking-images/stacking16.png'
-    },
-    {
-        'name' : 'Headphone Hub',
-        'img' : 'img/stacking-images/stacking17.png'
-    },
-    {
-        'name' : 'Hoy Poloi',
-        'img' : 'img/stacking-images/stacking18.png'
-    },
-    {
-        'name' : 'Inmotion',
-        'img' : 'img/stacking-images/stacking19.png'
-    },
-    {
-        'name' : 'Johnston & Murphy',
-        'img' : 'img/stacking-images/stacking20.png'
-    },
-    {
-        'name' : 'MAC',
-        'img' : 'img/stacking-images/stacking21.png'
-    },
-    {
-        'name' : 'Mc Donalds',
-        'img' : 'img/stacking-images/stacking22.png'
-    },
-    {
-        'name' : 'Nuts on Clark',
-        'img' : 'img/stacking-images/stacking23.png'
-    },
-    {
-        'name' : 'Rocky Mountain',
-        'img' : 'img/stacking-images/stacking24.png'
-    },
-    {
-        'name' : 'Sarahs Candies',
-        'img' : 'img/stacking-images/stacking25.png'
-    },
-    {
-        'name' : 'Shoe Hospital',
-        'img' : 'img/stacking-images/stacking26.png'
-    },
-    {
-        'name' : 'Spirit of the Red Horse',
-        'img' : 'img/stacking-images/stacking27.png'
-    },
-    {
-        'name' : 'Talie',
-        'img' : 'img/stacking-images/stacking28.png'
-    },
-    {
-        'name' : 'Vosges',
-        'img' : 'img/stacking-images/stacking29.png'
-    },
-    {
-        'name' : 'Vosges',
-        'img' : 'img/stacking-images/stacking29.png'
-    },
-];
-
 const config = {
     cols: 7,
     rows: 7,
@@ -140,11 +12,14 @@ const matchedElements = {};
 let time = 0;
 let gameInterval;
 
-//Selects a ramdom array
-const currentArrayName = ['firstArray', 'secondArray'][Math.floor(Math.random() * 2)];
-const currentArray = window[currentArrayName];
-
-console.log('currentArray:', currentArrayName);
+var currentArray = [];
+const numIcons = 15;
+for (var i = 0; i < numIcons; i++)
+{
+    var chosenIcons = Math.floor(Math.random() * storeArray.length);
+    currentArray[i] = storeArray[chosenIcons];
+    storeArray.splice(chosenIcons, 1);
+}
 
 /**
  * Game entry point
@@ -359,49 +234,6 @@ function clearMatches(matches) {
 }
 
 /**
- * Function to utilize data from a local JSON file asynchronously.
- * 
- * Reference used: https://codepen.io/KryptoniteDove/post/load-json-file-locally-using-pure-javascript
- * @param {Function} callback 
- */
-function loadJSON(callback) {   
-    var xobj = new XMLHttpRequest();
-    xobj.overrideMimeType("application/json");
-    xobj.open('GET', 'javascript/stacking_config.json', true); 
-    xobj.onreadystatechange = function () {
-        if (xobj.readyState == 4 && xobj.status == "200") {
-            // Required use of an anonymous callback as .open will NOT return
-            // a value but simply returns undefined in asynchronous mode
-            callback(xobj.responseText);
-        }
-    };
-    xobj.send(null);  
-}
-
-/**
- * Function which fetches the logos from json.
- */
-function getLogos() {
-    return loadJSON(response => {
-        return JSON.parse(response);
-    });
-}
-
-function take(arr, n) {
-    let result = new Array(n);
-    let len = arr.length;
-    let taken = new Array(len);
-    if (n > len)
-        throw new RangeError("getRandom: more elements taken than available");
-    while (n--) {
-        var x = Math.floor(Math.random() * len);
-        result[n] = arr[x in taken ? taken[x] : x];
-        taken[x] = --len;
-    }
-    return result;
-}
-
-/**
  * Function to create the initial state of the 2d game board.
  *  
  * @param {Number} cols number of columns
@@ -425,12 +257,12 @@ function createCurrent() {
     const randomElementIndex = Math.floor(Math.random() * currentArray.length);
     const current = currentArray[randomElementIndex];
     //Positionates the element in a ramdom column
-    const randomColumn = Math.floor(Math.random() * config.cols);
+    const randomColumn = Math.floor(Math.random() * cols);
     //preview row position
     current.position = {
         col: randomColumn,
         row: 0
-    };
+    };;
 
     if (board[0][randomColumn] !== null) { 
         // TODO: We can have the game have a bias against spawning blocks rows that would cause a game over to lower difficulty
