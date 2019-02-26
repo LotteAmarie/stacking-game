@@ -60,7 +60,7 @@ var firstArray = [
         'name' : 'The Green Market',
         'img' : 'img/stacking-images/stacking15.png'
     },
-]
+];
 
 var secondArray = [
     
@@ -134,11 +134,59 @@ const config = {
     gameSpeed: 500
 };
 
+var score = 0;
+const board = createBoard(cols, rows);
+const shoppingCart = [];
+
+const matchedElements = {};
+let time = 0;
+let gameInterval;
+
 //Selects a ramdom array
 const currentArrayName = ['firstArray', 'secondArray'][Math.floor(Math.random() * 2)];
 const currentArray = window[currentArrayName];
 
 console.log('currentArray:', currentArrayName);
+
+/**
+ * Game entry point
+ */
+function startGame() {
+    addEvents();
+
+    gameInterval = setInterval(() => {
+        if (canFall()) { // Falling State
+            fall();
+        } else { // When landing
+            const matchedSlots = match(current.position.row, current.position.col);
+            
+            if (matchedSlots) {
+                // TODO: This really should be moved into the clearMatches() function.
+                // Empties current cell
+                const { col, row } = current.position;
+                
+                emptyCell(getCell(row, col));
+                
+                board[row][col] = null;
+
+                console.log('matches:', matchedSlots);
+                
+                clearMatches(matchedSlots);
+            }
+    
+            // Creates new "current"
+            createCurrent();
+        }
+    
+        time = time + config.gameSpeed; // TODO: display this?
+    
+        // if (time === 60000) {
+        //     // sets localStorage
+        //     stopGame();
+        // }
+
+    }, config.gameSpeed);
+}
 
 /**
  * Function to check if the space below the current game space is empty and the
@@ -193,7 +241,7 @@ function getCell(row, col) { // TODO: not found case?
  * Function to return all the empty HTML div elements within the shopping bag.
  */
 function getShoppingBag() {
-    return document.querySelectorAll("div.logo.empty")
+    return document.querySelectorAll("div.logo.empty");
 }
 
 /**
@@ -204,7 +252,7 @@ function getShoppingBag() {
 function addToShoppingBag(img) {
     let bag = getShoppingBag();
 
-    bag[bag.length-1].style.backgroundImage = `url(${current.img})`;
+    bag[bag.length-1].style.backgroundImage = `url(${img})`;
     bag[bag.length-1].classList.remove('empty');
 }
 
@@ -283,7 +331,7 @@ function clearMatches(matches) {
         let previousCell = cell;
                     
         while(board[currentRow][m.col] !== null) {
-            const currentCell = getCell(currentRow, m.col)
+            const currentCell = getCell(currentRow, m.col);
                         
             // Updates images
             previousCell.style.backgroundImage = currentCell.style.backgroundImage;
@@ -367,14 +415,6 @@ function createBoard(cols, rows) {
     return arr;
 }
 
-var score = 0;
-const board = createBoard(cols, rows);
-const shoppingCart = [];
-
-const matchedElements = {};
-let time = 0;
-let gameInterval;
-
 /**
  * Function to create the current controllable game piece. The logo is pulled 
  * at random from a pool of twelve.
@@ -414,49 +454,6 @@ function stopGame() {
     clearInterval(gameInterval);
     localStorage.setItem('score', score);
     window.location.href= "../stacking-game/game_end_stacking.html";
-}
-
-function startGame() {
-    gameInterval = setInterval(() => {
-        if (canFall()) { // Falling State
-            fall();
-        } else { // When landing
-            const matchedSlots = match(current.position.row, current.position.col);
-            
-            if (matchedSlots) {
-    
-                if(!matchedElements[current.name]) {
-                    addToShoppingBag(current.img);
-
-                    // Creates an attribute in matched elements with the current name
-                    matchedElements[current.name] = true;
-                }
-    
-                // TODO: This really should be moved into the clearMatches() function.
-                // Empties current cell
-                const { col, row } = current.position;
-                
-                emptyCell(getCell(row, col));
-                
-                board[row][col] = null;
-
-                console.log('matches:', matchedSlots)
-                
-                clearMatches(matchedSlots);
-            }
-    
-            // Creates new "current"
-            createCurrent();
-        }
-    
-        time = time + config.gameSpeed; // TODO: display this?
-    
-        // if (time === 60000) {
-        //     // sets localStorage
-        //     stopGame();
-        // }
-
-    }, config.gameSpeed);
 }
 
 /**
@@ -553,4 +550,3 @@ function drawScore() {
 }
 
 startGame(); // TODO: Add this to the HTML's body onload
-addEvents();
