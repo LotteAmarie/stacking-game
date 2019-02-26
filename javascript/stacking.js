@@ -35,6 +35,13 @@ function startGame() {
             const matchedSlots = match(current.position.row, current.position.col);
             
             if (matchedSlots) {
+                if(!matchedElements[current.name]) {
+                    addToShoppingBag(current.img);
+
+                    // Creates an attribute in matched elements with the current name
+                    matchedElements[current.name] = true;
+                }
+
                 // TODO: This really should be moved into the clearMatches() function.
                 // Empties current cell
                 const { col, row } = current.position;
@@ -257,7 +264,7 @@ function createCurrent() {
     const randomElementIndex = Math.floor(Math.random() * currentArray.length);
     const current = currentArray[randomElementIndex];
     //Positionates the element in a ramdom column
-    const randomColumn = Math.floor(Math.random() * cols);
+    const randomColumn = Math.floor(Math.random() * config.cols);
     //preview row position
     current.position = {
         col: randomColumn,
