@@ -126,8 +126,6 @@ var secondArray = [
     },
 ];
 
-var cols = 7; // TODO: This is set twice. Should be a constant unless the ability to create divs dynamically is added.
-var rows = 7;
 const config = {
     cols: 7,
     rows: 7,
@@ -135,7 +133,7 @@ const config = {
 };
 
 var score = 0;
-const board = createBoard(cols, rows);
+const board = createBoard(config.cols, config.rows);
 const shoppingCart = [];
 
 const matchedElements = {};
@@ -423,7 +421,7 @@ function createCurrent() {
     const randomElementIndex = Math.floor(Math.random() * currentArray.length);
     const current = currentArray[randomElementIndex];
     //Positionates the element in a ramdom column
-    const randomColumn = Math.floor(Math.random() * cols);
+    const randomColumn = Math.floor(Math.random() * config.cols);
     //preview row position
     current.position = {
         col: randomColumn,
