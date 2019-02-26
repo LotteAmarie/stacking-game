@@ -151,6 +151,7 @@ console.log('currentArray:', currentArrayName);
  */
 function startGame() {
     addEvents();
+    createCurrent();
 
     gameInterval = setInterval(() => {
         if (canFall()) { // Falling State
@@ -442,7 +443,6 @@ function createCurrent() {
     getCell(current.position.row, current.position.col).style.backgroundRepeat = `no-repeat`;
     getCell(current.position.row, current.position.col).style.backgroundPosition = `center`;
 }
-createCurrent(); // TODO: Move this to startGame()
 
 /**
  * Function which stops the game by clearing the game interval.
