@@ -1,0 +1,42 @@
+@charset "UTF-8";
+.container {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	height: 100%;
+	background-color: #FFFFFF;
+	max-height: 1080px;
+}
+.stacking_start {
+	background-color: #B3B3B3;
+	background-repeat: no-repeat;
+	background: url(../img/stacking-main-images/stacking_start.jpg);
+	height: 1080px;
+	max-width: 1920px;
+	text-align: center;
+}
+#stackingdirections
+{
+	top: 50%;
+	padding-top: 10px;
+	padding-right: 35%;
+	padding-left: 10%;
+	padding-bottom: 10px;
+	position: absolute;
+}
+.stackingtext {
+	color: #ffffff;
+	text-align: center;
+	font-size: 120%;
+	font-weight: 95%;
+}
+#back {
+	padding-top: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	position: absolute;
+	bottom: 10px;
+	left: 0px;
+}
