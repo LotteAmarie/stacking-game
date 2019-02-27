@@ -40,9 +40,6 @@ var firstArray = [
         'name' : 'Cibo',
         'img' : 'img/stacking-images/stacking10.png'
     },
-];
-
-var secondArray = [
     {
         'name' : 'CNN',
         'img' : 'img/stacking-images/stacking11.png'
@@ -63,6 +60,10 @@ var secondArray = [
         'name' : 'The Green Market',
         'img' : 'img/stacking-images/stacking15.png'
     },
+];
+
+var secondArray = [
+    
     {
         'name' : 'Hudson',
         'img' : 'img/stacking-images/stacking16.png'
@@ -83,9 +84,6 @@ var secondArray = [
         'name' : 'Johnston & Murphy',
         'img' : 'img/stacking-images/stacking20.png'
     },
-];
-
-var thirdArray = [
     {
         'name' : 'MAC',
         'img' : 'img/stacking-images/stacking21.png'
@@ -128,19 +126,65 @@ var thirdArray = [
     },
 ];
 
-var cols = 7; // TODO: This is set twice. Should be a constant unless the ability to create divs dynamically is added.
-var rows = 7;
 const config = {
     cols: 7,
     rows: 7,
-    gameSpeed: 500
+    gameSpeed: 500, // in ms
+    gameDuration: 90000 // in ms
 };
 
+var score = 0;
+const board = createBoard(config.cols, config.rows);
+
+const matchedElements = {};
+let time = 0;
+let gameInterval;
+
 //Selects a ramdom array
-const currentArrayName = ['firstArray', 'secondArray', 'thirdArray'][Math.floor(Math.random() * 3)];
+const currentArrayName = ['firstArray', 'secondArray'][Math.floor(Math.random() * 2)];
 const currentArray = window[currentArrayName];
 
 console.log('currentArray:', currentArrayName);
+
+/**
+ * Game entry point
+ */
+function startGame() {
+    addEvents();
+    createCurrent();
+
+    gameInterval = setInterval(() => {
+        if (canFall()) { // Falling State
+            fall();
+        } else { // When landing
+            const matchedSlots = match(current.position.row, current.position.col);
+            
+            if (matchedSlots) {
+                // TODO: This really should be moved into the clearMatches() function.
+                // Empties current cell
+                const { col, row } = current.position;
+                
+                emptyCell(getCell(row, col));
+                
+                board[row][col] = null;
+
+                console.log('matches:', matchedSlots);
+                
+                clearMatches(matchedSlots);
+            }
+    
+            // Creates new "current"
+            createCurrent();
+        }
+    
+        time = time + config.gameSpeed; // TODO: display this?
+    
+        if (time === config.gameDuration) {
+            stopGame();
+        }
+
+    }, config.gameSpeed);
+}
 
 /**
  * Function to check if the space below the current game space is empty and the
@@ -195,7 +239,7 @@ function getCell(row, col) { // TODO: not found case?
  * Function to return all the empty HTML div elements within the shopping bag.
  */
 function getShoppingBag() {
-    return document.querySelectorAll("div.logo.empty")
+    return document.querySelectorAll("div.logo.empty");
 }
 
 /**
@@ -206,7 +250,7 @@ function getShoppingBag() {
 function addToShoppingBag(img) {
     let bag = getShoppingBag();
 
-    bag[bag.length-1].style.backgroundImage = `url(${current.img})`;
+    bag[bag.length-1].style.backgroundImage = `url(${img})`;
     bag[bag.length-1].classList.remove('empty');
 }
 
@@ -289,7 +333,7 @@ function clearMatches(matches) {
         let previousCell = cell;
                     
         while(board[currentRow][m.col] !== null) {
-            const currentCell = getCell(currentRow, m.col)
+            const currentCell = getCell(currentRow, m.col);
                         
             // Updates images
             previousCell.style.backgroundImage = currentCell.style.backgroundImage;
@@ -323,7 +367,7 @@ function clearMatches(matches) {
 function loadJSON(callback) {   
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
-    xobj.open('GET', 'javascript/stacking-config.json', true); 
+    xobj.open('GET', 'javascript/stacking_config.json', true); 
     xobj.onreadystatechange = function () {
         if (xobj.readyState == 4 && xobj.status == "200") {
             // Required use of an anonymous callback as .open will NOT return
@@ -373,14 +417,6 @@ function createBoard(cols, rows) {
     return arr;
 }
 
-var score = 0;
-const board = createBoard(cols, rows);
-const shoppingCart = [];
-
-const matchedElements = {};
-let time = 0;
-let gameInterval;
-
 /**
  * Function to create the current controllable game piece. The logo is pulled 
  * at random from a pool of twelve.
@@ -389,7 +425,7 @@ function createCurrent() {
     const randomElementIndex = Math.floor(Math.random() * currentArray.length);
     const current = currentArray[randomElementIndex];
     //Positionates the element in a ramdom column
-    const randomColumn = Math.floor(Math.random() * cols);
+    const randomColumn = Math.floor(Math.random() * config.cols);
     //preview row position
     current.position = {
         col: randomColumn,
@@ -411,59 +447,14 @@ function createCurrent() {
     getCell(current.position.row, current.position.col).style.backgroundRepeat = `no-repeat`;
     getCell(current.position.row, current.position.col).style.backgroundPosition = `center`;
 }
-createCurrent(); // TODO: Move this to startGame()
 
 /**
  * Function which stops the game by clearing the game interval.
  */
 function stopGame() {
     clearInterval(gameInterval);
-
-    let gameOverUrl = `game_end_stacking.php?score=${score}`;
-    window.location.assign(gameOverUrl);
-}
-
-function startGame() {
-    gameInterval = setInterval(() => {
-        if (canFall()) { // Falling State
-            fall();
-        } else { // When landing
-            const matchedSlots = match(current.position.row, current.position.col);
-            
-            if (matchedSlots) {
-    
-                if(!matchedElements[current.name]) {
-                    addToShoppingBag(current.img);
-
-                    // Creates an attribute in matched elements with the current name
-                    matchedElements[current.name] = true;
-                }
-    
-                // TODO: This really should be moved into the clearMatches() function.
-                // Empties current cell
-                const { col, row } = current.position;
-                emptyCell(getCell(row, col));
-                board[row][col] = null;
-
-                console.log('matches:', matchedSlots)
-                
-                clearMatches(matchedSlots);
-            }
-    
-            // Creates new "current"
-            createCurrent();
-        }
-        
-        time = time + config.gameSpeed; // TODO: display this?
-
-        if (time === 60000) { // in milliseconds
-            stopGame();
-        }
-    
-        // addNewIcon 
-        // how do I add a new icon and make a preview (before starting to fall) 
-        // in x,1 at a ramdom y postition
-    }, config.gameSpeed);
+    localStorage.setItem('score', score);
+    window.location.href= "../stacking-game/game_end_stacking.html";
 }
 
 /**
@@ -481,44 +472,56 @@ function emptyCell(cell) { // TODO: Also clear location in board array?
  */
 function addEvents () {
     document.body.addEventListener('keydown', function(event) {
-        // Avoids moving when reached the bottom
-        if(!canFall()) return;
-
         const { key } = event;
-        const { row, col } = current.position;
 
         switch(key) {
             case 'ArrowRight':
-                if(!canMove('right')) {
-                    return;
-                }
-
-                emptyCell(getCell(row, col));
-                board[row][col] = null;
-                board[row][col+1] = current;
-                getCell(row, col+1).style.backgroundImage = `url(${current.img})`;
-                getCell(row, col+1).style.backgroundSize = `contain`; 
-                getCell(row, col+1).style.backgroundRepeat = `no-repeat`;
-                getCell(row, col+1).style.backgroundPosition = `center`;
-                current.position.col++;
+                moveRight();
                 break;
                 
             case 'ArrowLeft':
-                if(!canMove('left')) {
-                    return;
-                }
-
-                emptyCell(getCell(row, col));
-                board[row][col] = null;
-                board[row][col-1] = current;
-                getCell(row, col-1).style.backgroundImage = `url(${current.img})`;
-                getCell(row, col-1).style.backgroundSize = `contain`; 
-                getCell(row, col-1).style.backgroundRepeat = `no-repeat`;
-                getCell(row, col-1).style.backgroundPosition = `center`;
-                current.position.col--;
+                moveLeft();
                 break;
         }
     });
+
+    document.querySelector('.arrow-left').addEventListener('click', moveLeft);
+    document.querySelector('.arrow-right').addEventListener('click', moveRight);
+}
+
+function moveLeft() {
+    if(!canFall() || !canMove('left')) {
+        return;
+    }
+
+    const { row, col } = current.position;
+
+    emptyCell(getCell(row, col));
+    board[row][col] = null;
+    board[row][col-1] = current;
+    getCell(row, col-1).style.backgroundImage = `url(${current.img})`;
+    getCell(row, col-1).style.backgroundSize = `contain`; 
+    getCell(row, col-1).style.backgroundRepeat = `no-repeat`;
+    getCell(row, col-1).style.backgroundPosition = `center`;
+    current.position.col--;
+}
+
+function moveRight() {
+    // Avoids moving when reached the bottom
+    if(!canFall() || !canMove('right')) {
+        return;
+    }
+
+    const { row, col } = current.position;
+
+    emptyCell(getCell(row, col));
+    board[row][col] = null;
+    board[row][col+1] = current;
+    getCell(row, col+1).style.backgroundImage = `url(${current.img})`;
+    getCell(row, col+1).style.backgroundSize = `contain`; 
+    getCell(row, col+1).style.backgroundRepeat = `no-repeat`;
+    getCell(row, col+1).style.backgroundPosition = `center`;
+    current.position.col++;
 }
 
 /**
@@ -548,4 +551,3 @@ function drawScore() {
 }
 
 startGame(); // TODO: Add this to the HTML's body onload
-addEvents();

@@ -145,3 +145,33 @@ body {
 	grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 	grid-gap: 10px;
 }
+
+/* Arrows */
+.stacking-right {
+	position: relative;
+}
+
+.stacking-right .arrow {
+	position: absolute;
+	top: 0;
+	width: 40px;
+	height: 100%;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 100%;
+	transition: .3s opacity;
+}
+
+.stacking-right .arrow:hover {
+	opacity: .7;
+}
+
+.stacking-right .arrow-left {
+	background-image: url(../img/arrow-left.png);
+	left: -40px;
+}
+
+.stacking-right .arrow-right {
+	background-image: url(../img/arrow-right.png);
+	right: -40px;
+}
