@@ -1,10 +1,4 @@
 @charset "UTF-8";
-/* Body */
-
-
-
-/* Thank you - coupon page */
-
 .game-end {
 	text-align: center;
 	margin: 0 auto;
@@ -49,7 +43,7 @@
 }
 .points {
 	font-family: 'Roboto Condensed', sans-serif;
-	font-size: 250px;
+	font-size: 120px;
 	font-weight: 700;
 	color: #ffffff;
 	line-height: 230px;

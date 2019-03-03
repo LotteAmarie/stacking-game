@@ -59,7 +59,10 @@ function startGame() {
             createCurrent();
         }
     
-        time = time + config.gameSpeed; // TODO: display this?
+        time = time + config.gameSpeed; // TODO: display this in seconds?
+
+
+        document.getElementById('stackingtime').innerHTML = time + " milliseconds";
     
         if (time === config.gameDuration) {
             stopGame();

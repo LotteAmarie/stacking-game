@@ -35,6 +35,51 @@ body {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
+
+/*Stacking main*/
+.stacking_start {
+	background-color: #B3B3B3;
+	background-repeat: no-repeat;
+	background: url(stacking-game/img/stacking_start.jpg);
+	height: 1080px;
+	max-width: 1920px;
+	text-align: center;
+}
+.stacking {
+	/* background-color: #B3B3B3; */
+	background-repeat: no-repeat;
+	max-width: 1920px;
+	text-align: center;
+	max-height: 1080px;
+	height: 100%;
+	width: 100%;
+	background: url(../images/stacking_background.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+#stackingdirections
+{
+	top: 50%;
+	padding-top: 10px;
+	padding-right: 35%;
+	padding-left: 10%;
+	padding-bottom: 10px;
+	position: absolute;
+}
+.stackingtitle {
+	width: 32%;
+	padding-left: 3%;
+	text-align: left;
+	padding-top: 0px;
+	height: 12%;
+	float: left;
+}
+.stackingtitle img {
+	width: 100%;
+}
 /* Stacking */
 .stacking {
 	/* background-color: #B3B3B3; */
@@ -62,6 +107,15 @@ body {
 	width: 100%;
 }
 .stackingscore {
+	float: right;
+	width: 15%;
+	background-color: #3000F5;
+	color: #ffffff;
+	font-size: 150%;
+	padding: 20px 5px;
+	height: 8%;
+}
+.stackingstime {
 	float: right;
 	width: 15%;
 	background-color: #3000F5;
