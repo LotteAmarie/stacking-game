@@ -115,6 +115,15 @@ body {
 	padding: 20px 5px;
 	height: 8%;
 }
+.stackingstime {
+	float: right;
+	width: 15%;
+	background-color: #3000F5;
+	color: #ffffff;
+	font-size: 150%;
+	padding: 20px 5px;
+	height: 8%;
+}
 .stacking-right {
 	width: 59%;
 	float: right;
