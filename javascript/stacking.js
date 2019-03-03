@@ -1,144 +1,72 @@
-//Arrays with brand icons to ramdomly select them at a given level (1,2,or 3)
-var firstArray = [
-    {
-        'name' : 'Burrito Beach',
-        'img' : 'img/stacking-images/stacking1.png'
-    },
-    {
-        'name' : 'American Dog',
-        'img' : 'img/stacking-images/stacking2.png'
-    },
-    {
-        'name' : 'Anntie Anne',
-        'img' : 'img/stacking-images/stacking3.png'
-    },
-    {
-        'name' : 'Barbaras',
-        'img' : 'img/stacking-images/stacking4.png'
-    },
-    {
-        'name' : 'Berghoff Cafe',
-        'img' : 'img/stacking-images/stacking5.png'
-    },
-    {
-        'name' : 'Brighton',
-        'img' : 'img/stacking-images/stacking6.png'
-    },
-    {
-        'name' : 'Brooks Brothers',
-        'img' : 'img/stacking-images/stacking7.png'
-    },
-    {
-        'name' : 'Brookstone',
-        'img' : 'img/stacking-images/stacking8.png'
-    },
-    {
-        'name' : 'BSmooth',
-        'img' : 'img/stacking-images/stacking9.png'
-    },
-    {
-        'name' : 'Cibo',
-        'img' : 'img/stacking-images/stacking10.png'
-    },
-    {
-        'name' : 'CNN',
-        'img' : 'img/stacking-images/stacking11.png'
-    },
-    {
-        'name' : 'Coach',
-        'img' : 'img/stacking-images/stacking12.png'
-    },
-    {
-        'name' : 'Field',
-        'img' : 'img/stacking-images/stacking13.png'
-    },
-    {
-        'name' : 'Barbaras',
-        'img' : 'img/stacking-images/stacking14.png'
-    },
-    {
-        'name' : 'The Green Market',
-        'img' : 'img/stacking-images/stacking15.png'
-    },
-]
-
-var secondArray = [
-    
-    {
-        'name' : 'Hudson',
-        'img' : 'img/stacking-images/stacking16.png'
-    },
-    {
-        'name' : 'Headphone Hub',
-        'img' : 'img/stacking-images/stacking17.png'
-    },
-    {
-        'name' : 'Hoy Poloi',
-        'img' : 'img/stacking-images/stacking18.png'
-    },
-    {
-        'name' : 'Inmotion',
-        'img' : 'img/stacking-images/stacking19.png'
-    },
-    {
-        'name' : 'Johnston & Murphy',
-        'img' : 'img/stacking-images/stacking20.png'
-    },
-    {
-        'name' : 'MAC',
-        'img' : 'img/stacking-images/stacking21.png'
-    },
-    {
-        'name' : 'Mc Donalds',
-        'img' : 'img/stacking-images/stacking22.png'
-    },
-    {
-        'name' : 'Nuts on Clark',
-        'img' : 'img/stacking-images/stacking23.png'
-    },
-    {
-        'name' : 'Rocky Mountain',
-        'img' : 'img/stacking-images/stacking24.png'
-    },
-    {
-        'name' : 'Sarahs Candies',
-        'img' : 'img/stacking-images/stacking25.png'
-    },
-    {
-        'name' : 'Shoe Hospital',
-        'img' : 'img/stacking-images/stacking26.png'
-    },
-    {
-        'name' : 'Spirit of the Red Horse',
-        'img' : 'img/stacking-images/stacking27.png'
-    },
-    {
-        'name' : 'Talie',
-        'img' : 'img/stacking-images/stacking28.png'
-    },
-    {
-        'name' : 'Vosges',
-        'img' : 'img/stacking-images/stacking29.png'
-    },
-    {
-        'name' : 'Vosges',
-        'img' : 'img/stacking-images/stacking29.png'
-    },
-];
-
-var cols = 7; // TODO: This is set twice. Should be a constant unless the ability to create divs dynamically is added.
-var rows = 7;
 const config = {
     cols: 7,
     rows: 7,
-    gameSpeed: 500
+    gameSpeed: 500, // in ms
+    gameDuration: 150000 // in ms
 };
 
-//Selects a ramdom array
-const currentArrayName = ['firstArray', 'secondArray'][Math.floor(Math.random() * 2)];
-const currentArray = window[currentArrayName];
+var score = 0;
+const board = createBoard(config.cols, config.rows);
 
-console.log('currentArray:', currentArrayName);
+const matchedElements = {};
+let time = 0;
+let gameInterval;
+
+var currentArray = [];
+const numIcons = 15;
+for (var i = 0; i < numIcons; i++)
+{
+    var chosenIcons = Math.floor(Math.random() * storeArray.length);
+    currentArray[i] = storeArray[chosenIcons];
+    storeArray.splice(chosenIcons, 1);
+}
+
+/**
+ * Game entry point
+ */
+function startGame() {
+    addEvents();
+    createCurrent();
+
+    gameInterval = setInterval(() => {
+        if (canFall()) { // Falling State
+            fall();
+        } else { // When landing
+            const matchedSlots = match(current.position.row, current.position.col);
+            
+            if (matchedSlots) {
+                if(!matchedElements[current.name]) {
+                    addToShoppingBag(current.img);
+
+                    // Creates an attribute in matched elements with the current name
+                    matchedElements[current.name] = true;
+                }
+
+                // TODO: This really should be moved into the clearMatches() function.
+                // Empties current cell
+                const { col, row } = current.position;
+                
+                emptyCell(getCell(row, col));
+                
+                board[row][col] = null;
+
+                console.log('matches:', matchedSlots);
+                
+                clearMatches(matchedSlots);
+            }
+    
+            // Creates new "current"
+            createCurrent();
+        }
+    
+        time = time + config.gameSpeed; // TODO: display this?
+    
+        if (time === config.gameDuration) {
+            stopGame();
+        }
+
+    }, config.gameSpeed);
+}
 
 /**
  * Function to check if the space below the current game space is empty and the
@@ -193,7 +121,7 @@ function getCell(row, col) { // TODO: not found case?
  * Function to return all the empty HTML div elements within the shopping bag.
  */
 function getShoppingBag() {
-    return document.querySelectorAll("div.logo.empty")
+    return document.querySelectorAll("div.logo.empty");
 }
 
 /**
@@ -204,8 +132,12 @@ function getShoppingBag() {
 function addToShoppingBag(img) {
     let bag = getShoppingBag();
 
-    bag[bag.length-1].style.backgroundImage = `url(${current.img})`;
+    bag[bag.length-1].style.backgroundImage = `url(${img})`;
     bag[bag.length-1].classList.remove('empty');
+
+    if (bag.length === 1) {
+        stopGame();
+    }
 }
 
 /**
@@ -287,7 +219,7 @@ function clearMatches(matches) {
         let previousCell = cell;
                     
         while(board[currentRow][m.col] !== null) {
-            const currentCell = getCell(currentRow, m.col)
+            const currentCell = getCell(currentRow, m.col);
                         
             // Updates images
             previousCell.style.backgroundImage = currentCell.style.backgroundImage;
@@ -313,49 +245,6 @@ function clearMatches(matches) {
 }
 
 /**
- * Function to utilize data from a local JSON file asynchronously.
- * 
- * Reference used: https://codepen.io/KryptoniteDove/post/load-json-file-locally-using-pure-javascript
- * @param {Function} callback 
- */
-function loadJSON(callback) {   
-    var xobj = new XMLHttpRequest();
-    xobj.overrideMimeType("application/json");
-    xobj.open('GET', 'javascript/stacking-config.json', true); 
-    xobj.onreadystatechange = function () {
-        if (xobj.readyState == 4 && xobj.status == "200") {
-            // Required use of an anonymous callback as .open will NOT return
-            // a value but simply returns undefined in asynchronous mode
-            callback(xobj.responseText);
-        }
-    };
-    xobj.send(null);  
-}
-
-/**
- * Function which fetches the logos from json.
- */
-function getLogos() {
-    return loadJSON(response => {
-        return JSON.parse(response);
-    });
-}
-
-function take(arr, n) {
-    let result = new Array(n);
-    let len = arr.length;
-    let taken = new Array(len);
-    if (n > len)
-        throw new RangeError("getRandom: more elements taken than available");
-    while (n--) {
-        var x = Math.floor(Math.random() * len);
-        result[n] = arr[x in taken ? taken[x] : x];
-        taken[x] = --len;
-    }
-    return result;
-}
-
-/**
  * Function to create the initial state of the 2d game board.
  *  
  * @param {Number} cols number of columns
@@ -371,14 +260,6 @@ function createBoard(cols, rows) {
     return arr;
 }
 
-var score = 0;
-const board = createBoard(cols, rows);
-const shoppingCart = [];
-
-const matchedElements = {};
-let time = 0;
-let gameInterval;
-
 /**
  * Function to create the current controllable game piece. The logo is pulled 
  * at random from a pool of twelve.
@@ -387,12 +268,12 @@ function createCurrent() {
     const randomElementIndex = Math.floor(Math.random() * currentArray.length);
     const current = currentArray[randomElementIndex];
     //Positionates the element in a ramdom column
-    const randomColumn = Math.floor(Math.random() * cols);
+    const randomColumn = Math.floor(Math.random() * config.cols);
     //preview row position
     current.position = {
         col: randomColumn,
         row: 0
-    };
+    };;
 
     if (board[0][randomColumn] !== null) { 
         // TODO: We can have the game have a bias against spawning blocks rows that would cause a game over to lower difficulty
@@ -409,59 +290,14 @@ function createCurrent() {
     getCell(current.position.row, current.position.col).style.backgroundRepeat = `no-repeat`;
     getCell(current.position.row, current.position.col).style.backgroundPosition = `center`;
 }
-createCurrent(); // TODO: Move this to startGame()
 
 /**
  * Function which stops the game by clearing the game interval.
  */
 function stopGame() {
     clearInterval(gameInterval);
-
-    let gameOverUrl = `game_end_stacking.php?score=${score}`;
-    window.location.assign(gameOverUrl);
-}
-
-function startGame() {
-    gameInterval = setInterval(() => {
-        if (canFall()) { // Falling State
-            fall();
-        } else { // When landing
-            const matchedSlots = match(current.position.row, current.position.col);
-            
-            if (matchedSlots) {
-    
-                if(!matchedElements[current.name]) {
-                    addToShoppingBag(current.img);
-
-                    // Creates an attribute in matched elements with the current name
-                    matchedElements[current.name] = true;
-                }
-    
-                // TODO: This really should be moved into the clearMatches() function.
-                // Empties current cell
-                const { col, row } = current.position;
-                emptyCell(getCell(row, col));
-                board[row][col] = null;
-
-                console.log('matches:', matchedSlots)
-                
-                clearMatches(matchedSlots);
-            }
-    
-            // Creates new "current"
-            createCurrent();
-        }
-        
-        time = time + config.gameSpeed; // TODO: display this?
-
-        if (time === 60000) { // in milliseconds
-            stopGame();
-        }
-    
-        // addNewIcon 
-        // how do I add a new icon and make a preview (before starting to fall) 
-        // in x,1 at a ramdom y postition
-    }, config.gameSpeed);
+    localStorage.setItem('score', score);
+    window.location.href= "../stacking-game/game_end_stacking.html";
 }
 
 /**
@@ -558,4 +394,3 @@ function drawScore() {
 }
 
 startGame(); // TODO: Add this to the HTML's body onload
-addEvents();
