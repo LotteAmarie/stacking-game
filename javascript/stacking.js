@@ -62,7 +62,7 @@ function startGame() {
         time = time + config.gameSpeed; // TODO: display this in seconds?
 
 
-        document.getElementById('stackingtime').innerHTML = time + " milliseconds";
+        document.getElementById('stackingtime').innerHTML = `${Math.floor(time/1000)} seconds`;
     
         if (time === config.gameDuration) {
             stopGame();
